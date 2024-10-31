@@ -1,0 +1,37 @@
+﻿@model EmpMVC.Models.Department
+
+@{
+    ViewData["Title"] = "Edit";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container shadow p-5">
+    <div class="row pb-2">
+        <h2>Edit Department</h2>
+    </div>
+
+    <form method="post" asp-action="Edit">
+        <div asp-validation-summary="All"></div>
+
+        <div class="form-row">
+            <div class="form-group col-md-6">
+                <label asp-for="DeptName">Department Name</label>
+                <input type="text" class="form-control mb-3" asp-for="DeptName">
+                <span asp-validation-for="DeptName" class=" alert-danger"></span>
+            </div>
+            
+        </div>
+
+        
+
+
+        <button type="submit" class="btn btn-lg btn-primary p-2"><i class="bi bi-file-plus-fill"></i>Update</button>
+        <a asp-controller="Department" asp-action="Index" class="btn btn-lg btn-warning p-2">Back To List</a>
+    </form>
+
+</div>
+
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

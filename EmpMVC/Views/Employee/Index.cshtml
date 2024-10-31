@@ -1,0 +1,128 @@
+﻿@model X.PagedList.IPagedList<EmpMVC.Models.Employee>
+@using X.PagedList.Mvc.Core;
+@using X.PagedList.Extensions;
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@if (TempData["ResultOk"] != null)
+{
+    <div class="modal fade" id="resultModal" tabindex="-1" aria-labelledby="resultModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="resultModalLabel">Result</h5>
+                    <button type="button" class="btn btn-secondary" onclick="closeModal()">
+
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    @TempData["ResultOk"]
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" onclick="closeModal()">Close</button>
+
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+<div class="container shadow p-5">
+
+    <h1 class="text-center mb-3"> Employee Directory </h1>
+
+    <div class="col mb-3">
+        <a asp-controller="Employee" asp-action="Create" class="btn btn-lg btn-primary"><i class="bi bi-file-plus-fill"></i>Add Employee</a>
+    </div>
+    <table class="table table-bordered table-hover">
+        <thead>
+            <tr>
+                <th scope="col">
+                    @Html.ActionLink("First Name", "Index",
+                    new { sortOrder = "FirstName", CurrentSort = ViewBag.CurrentSort })
+                </th>
+                <th scope="col">
+                    @Html.ActionLink("Last Name", "Index",
+                    new { sortOrder = "LastName", CurrentSort = ViewBag.CurrentSort })
+                </th>
+                <th scope="col">
+                    @Html.ActionLink("Designation", "Index",
+                    new { sortOrder = "Designation", CurrentSort = ViewBag.CurrentSort })
+                    
+                </th>
+                <th scope="col">
+                    @Html.ActionLink("Department", "Index",
+                    new { sortOrder = "DeptName", CurrentSort = ViewBag.CurrentSort })
+                </th>
+                <th scope="col">
+                    @Html.ActionLink("Address", "Index",
+                    new { sortOrder = "Address", CurrentSort = ViewBag.CurrentSort })
+                </th>
+                <th scope="col">
+                    @Html.ActionLink("CreatedOn", "Index",
+                    new { sortOrder = "CreatedOn", CurrentSort = ViewBag.CurrentSort })
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td width="20%">
+                        @item.FirstName
+                    </td>
+                    <td width="20%">
+                        @item.LastName
+                    </td>
+                    <td width="20%">
+                        @item.Designation
+                    </td>
+                    <td width="20%">
+                        @item.Department.DeptName
+                    </td>
+                    <td width="25%">
+                        @item.Address
+                    </td>
+                    <td width="20%">
+                        @item.CreatedOn
+                    </td>
+                    <td>
+                        <div role="group" class="w-60 btn-group">
+                            <a asp-controller="Employee" asp-action="Edit" asp-route-id="@item.EmployeeId" class=" btn btn-sm btn-primary"><i class="bi bi-pencil-square"></i>Edit</a>&nbsp;
+                            <a asp-controller="Employee" asp-action="Delete" asp-route-id="@item.EmployeeId" class="btn btn-sm btn-danger"><i class="bi bi-trash-fill"></i>Delete</a>
+                        </div>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    <div id='Paging' style="text-align:center">
+        Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber)
+        of @Model.PageCount
+
+        @Html.PagedListPager(Model, page => Url.Action("Index", new { page }))
+    </div>
+</div>
+</div>
+<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+
+
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            // Show modal if TempData has a message
+            if (@(TempData["ResultOk"] != null ? "true" : "false")) {
+                $('#resultModal').modal('show');
+            }
+        });
+
+        function closeModal() {
+            $('#resultModal').modal('hide');
+        }
+    </script>
+}

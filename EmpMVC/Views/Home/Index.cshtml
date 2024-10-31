@@ -2,7 +2,34 @@
     ViewData["Title"] = "Home Page";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+
+<div class="container text-center mt-5">
+    <h1>Welcome to the Employee Management System</h1>
+    <p class="lead">Manage departments, employees, and more with ease.</p>
+
+    <div class="row mt-4">
+        <div class="col-md-4">
+            <a asp-controller="Department" asp-action="Index" class="btn btn-lg btn-primary">
+                <i class="bi bi-building"></i> View Departments
+            </a>
+        </div>
+        <div class="col-md-4">
+            <a asp-controller="Department" asp-action="Create" class="btn btn-lg btn-success">
+                <i class="bi bi-plus-circle"></i> Add New Department
+            </a>
+        </div>
+        <div class="col-md-4">
+            <a asp-controller="Employee" asp-action="Index" class="btn btn-lg btn-info">
+                <i class="bi bi-people"></i> Manage Employees
+            </a>
+        </div>
+    </div>
+
+    <hr class="my-5">
+
+    <div class="text-muted">
+        <p>Use the navigation bar above to access other parts of the application.</p>
+        <p>&copy; @DateTime.Now.Year - Employee Management System</p>
+    </div>
 </div>
+
